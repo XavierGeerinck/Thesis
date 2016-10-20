@@ -1,0 +1,11 @@
+{
+  "name": "kafka-test-consumer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "kafka-node": "^1.0.1",
+    "plotly": "^1.0.6",
+    "shaman": "^0.3.2"
+  }
+}
