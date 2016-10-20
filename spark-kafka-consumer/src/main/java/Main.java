@@ -29,11 +29,12 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         // Init Spark
         SparkConf sparkConf = new SparkConf().setAppName("JavaKafkaConnector").setMaster("local");
-        JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, Durations.seconds(10));
+        JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, Durations.seconds(60));
 
         // Configure Kafka Connection
         Map<String, String> kafkaParams = new HashMap<>();
-        kafkaParams.put("metadata.broker.list", "10.48.98.232:9092");
+//        kafkaParams.put("metadata.broker.list", "10.48.98.232:9092");
+        kafkaParams.put("metadata.broker.list", "10.0.7.12:9092");
 //        kafkaParams.put("key.deserializer", StringDeserializer.class);
 //        kafkaParams.put("value.deserializer", StringDeserializer.class);
 //        kafkaParams.put("group.id", "exampleGroup");
@@ -68,13 +69,14 @@ public class Main {
         .filter(new Function<CAdvisor, Boolean>() {
             @Override
             public Boolean call(CAdvisor cAdvisor) throws Exception {
-                return cAdvisor.getContainerName().equals("kafka.1.d13y4q7ol39r7vk4qftotpsre");
+                return cAdvisor.getContainerName().equals("kafka.1.1o453zttpgerdkdu7xkkhz6d0");
             }
         })
         // Parse to <Memory, [ Time ]> where time is a feature
         .map(new Function<CAdvisor, LabeledPoint>() {
             @Override
             public LabeledPoint call(CAdvisor cAdvisor) throws Exception {
+                System.out.println(cAdvisor.getTimestamp());
                 // Parse time
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
                 Date parsedTime =  df.parse(cAdvisor.getTimestamp());
@@ -82,7 +84,6 @@ public class Main {
                 return new LabeledPoint(cAdvisor.getContainerStats().getMemory().getUsage(), Vectors.dense(parsedTime.getTime()));
             }
         });
-
 
 //        JavaDStream<LabeledPoint> normalizedStream = parsedStream.map(new Function<LabeledPoint, LabeledPoint>() {
 //            @Override
@@ -109,6 +110,7 @@ public class Main {
             return rand == 1;
         }).map((Function<LabeledPoint, Vector>) labeledPoint -> labeledPoint.features()));
 
+        predictions.print();
 
         predictions.foreachRDD(new VoidFunction2<JavaRDD<Double>, Time>() {
             @Override
