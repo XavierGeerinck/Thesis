@@ -10,7 +10,6 @@ import org.apache.spark.mllib.regression.LabeledPoint;
 import org.apache.spark.mllib.regression.LinearRegressionModel;
 import org.apache.spark.mllib.regression.LinearRegressionWithSGD;
 import pojo.CAdvisor;
-import scala.Tuple1;
 import scala.Tuple2;
 
 import java.io.Serializable;
@@ -26,6 +25,7 @@ import java.util.Locale;
  */
 public class Main {
     public static void main(String[] args) {
+        System.setProperty("hadoop.home.dir", "C:\\hadoop"); // comment out on mac
         SparkConf conf = new SparkConf().setAppName("JavaLinearRegressionWithSGDExample").setMaster("local");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
@@ -34,60 +34,74 @@ public class Main {
 //        String path = "src/main/resources/test.txt";
         String path = "src/main/resources/data_kafka_container.txt";
         JavaRDD<String> data = sc.textFile(path);
-        JavaRDD<CAdvisor> parsedData = data.map(
-            new Function<String, CAdvisor>() {
-                public CAdvisor call(String line) throws ParseException {
+        JavaRDD<LabeledPoint> parsedData = data.map(
+            new Function<String, LabeledPoint>() {
+                public LabeledPoint call(String line) throws ParseException {
                     // Parse the JSON to our POJO
                     Gson g = new Gson();
                     CAdvisor cAdvisor = g.fromJson(line, CAdvisor.class);
 
-                    return cAdvisor;
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+                    Date parsedTime =  df.parse(cAdvisor.getTimestamp());
 
-//                    // Example Code
-//                    String[] parts = line.split(",");
-//                    String[] features = parts[1].split(" ");
-//                    double[] v = new double[features.length];
-//                    for (int i = 0; i < features.length - 1; i++) {
-//                        v[i] = Double.parseDouble(features[i]);
-//                    }
-//                    return new LabeledPoint(Double.parseDouble(parts[0]), Vectors.dense(v));
+//                    return new Tuple2<>(parsedTime.getTime(), cAdvisor);
+                    //System.out.println(parsedTime.getTime() + "," + cAdvisor.getContainerStats().getMemory().getUsage());
+                    return new LabeledPoint(cAdvisor.getContainerStats().getMemory().getUsage(), Vectors.dense(parsedTime.getTime()));
                 }
             }
         );
 
 
-
-
-        CAdvisor max = parsedData.max(new CAdvisorTimeComparator());
-
-        System.out.println("Max time: " + max.getTimestamp());
-                //System.out.println("Min time: " + max.getMin().toString());
-
-        JavaRDD<LabeledPoint> parsedData2 = parsedData.map(new Function<CAdvisor, LabeledPoint>() {
+        // Get max and min time and RAM
+        JavaRDD<Double> times = parsedData.map(new Function<LabeledPoint, Double>() {
             @Override
-            public LabeledPoint call(CAdvisor cAdvisor) throws Exception {
-                // Parse the date to a double
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-                Date parsedTime =  df.parse(cAdvisor.getTimestamp());
-
-                return new LabeledPoint(cAdvisor.getContainerStats().getMemory().getUsage(), Vectors.dense(parsedTime.getTime()));
+            public Double call(LabeledPoint lp) throws Exception {
+                return lp.features().toArray()[0];
             }
-        })
+        });
 
-        parsedData.cache();
+        // Doubles can convert longs up til E15, time is E12 so it should be fine
+        final Double maxTime = times.max(new TimeComparator());
+        final Double minTime = times.min(new TimeComparator());
+        final Double maxRAM = (double)2147483648L; // 2Gb
+        final Double minRAM = 0.0;
+
+        // Normalize the data based on the min time and RAM
+        JavaRDD<LabeledPoint> normalized = parsedData.map(new Function<LabeledPoint, LabeledPoint>() {
+            @Override
+            public LabeledPoint call(LabeledPoint lp) throws Exception {
+                double normalizedLabel = lp.label() / maxRAM;
+                double normalizedFeature1 = ((lp.features().toArray()[0] - minTime) / (maxTime - minTime));
+
+                return new LabeledPoint(normalizedLabel, Vectors.dense(normalizedFeature1));
+            }
+        });
+
+        // Split the data in a training set and a testing set (supervised learning)
+        JavaRDD<LabeledPoint>[] splits = normalized.randomSplit(new double[] { 0.8, 0.2 });
+        JavaRDD<LabeledPoint> trainingSet = splits[0].cache();
+        JavaRDD<LabeledPoint> testingSet = splits[1].cache();
 
         // Building the model
-        int numIterations = 100;
-//        double stepSize = 0.00000001;
+        int numIterations = 20;
         double stepSize = 5;
-        final LinearRegressionModel model =
-                LinearRegressionWithSGD.train(JavaRDD.toRDD(parsedData), numIterations, stepSize);
+
+        final LinearRegressionModel model = LinearRegressionWithSGD.train(JavaRDD.toRDD(trainingSet), numIterations, stepSize);
+
+        JavaRDD<Double> prediction = model.predict(testingSet.map(LabeledPoint::features));
+
+        // Evaluate the model and compute training error through Root Mean Squared Error (RMSE)
+        // https://en.wikipedia.org/wiki/Root-mean-square_deviation
+        //JavaPairRDD predictionAndTarget = prediction.zip(testingSet.map(LabeledPoint::features));
+        //double RMSE = Math.sqrt(predictionAndTarget.map())
 
         // Evaluate model on training examples and compute training error
-        JavaRDD<Tuple2<Double, Double>> valuesAndPreds = parsedData.map(
+        JavaRDD<Tuple2<Double, Double>> valuesAndPreds = testingSet.map(
                 new Function<LabeledPoint, Tuple2<Double, Double>>() {
                     public Tuple2<Double, Double> call(LabeledPoint point) {
                         double prediction = model.predict(point.features());
+                        //System.out.println("" + (point.label() + "," + prediction));
+                        //System.out.println("" + (point.label() + "," + point.features()));
                         return new Tuple2<>(prediction, point.label());
                     }
                 }
@@ -99,23 +113,43 @@ public class Main {
                     }
                 }
         ).rdd()).mean();
+//
         System.out.println("training Mean Squared Error = " + MSE);
 
+
+
+
+        System.out.println("Printing X,Y, submit in: http://www.alcula.com/calculators/statistics/scatter-plot/");
+
+
+//        // Original
+        normalized.foreach(new VoidFunction<LabeledPoint>() {
+            @Override
+            public void call(LabeledPoint labeledPoint) throws Exception {
+                // Original
+                //System.out.println("" + labeledPoint.features().toArray()[0] + "," + labeledPoint.label());
+                System.out.println("" + labeledPoint.features().toArray()[0] + "," + model.predict(Vectors.dense(labeledPoint.features().toArray()[0])));
+            }
+        });
+
+//        System.out.println("Original Value: 463 851 520");
+//        System.out.println("Prediction: " + model.predict(Vectors.dense(1.0)));
+
         // Save and load model
-        model.save(sc.sc(), "target/tmp/javaLinearRegressionWithSGDModel");
-        LinearRegressionModel sameModel = LinearRegressionModel.load(sc.sc(),
-                "target/tmp/javaLinearRegressionWithSGDModel");
-        // $example off$
+//        model.save(sc.sc(), "target/tmp/javaLinearRegressionWithSGDModel");
+//        LinearRegressionModel sameModel = LinearRegressionModel.load(sc.sc(),
+//                "target/tmp/javaLinearRegressionWithSGDModel");
+//        // $example off$
 
         sc.stop();
     }
 
-    public static class LabeledPointCompare implements Serializable, Comparator<LabeledPoint> {
+    public static class TimeComparator implements Serializable, Comparator<Double> {
         @Override
-        public int compare(LabeledPoint o1, LabeledPoint o2) {
-            if (o1.features().toArray()[0] > o2.features().toArray()[0]) {
+        public int compare(Double o1, Double o2) {
+            if (o1 > o2) {
                 return 1;
-            } else if (o1.features().toArray()[0] == o2.features().toArray()[0]) {
+            } else if (o1 == o2) {
                 return 0;
             } else {
                 return -1;
