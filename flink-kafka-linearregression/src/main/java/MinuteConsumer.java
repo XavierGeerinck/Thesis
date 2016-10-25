@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+import com.twitter.chill.Tuple4Serializer;
 import org.apache.flink.api.common.functions.*;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.common.state.ValueState;
@@ -21,13 +22,22 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.api.windowing.windows.Window;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer08;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer082;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer08;
+import org.apache.flink.streaming.util.serialization.SerializationSchema;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
+import org.apache.sling.commons.json.JSONException;
+import org.apache.sling.commons.json.JSONObject;
 import org.w3c.dom.TypeInfo;
 import pojo.CAdvisor;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
@@ -71,35 +81,44 @@ public class MinuteConsumer {
 
         DataStream<CAdvisor> dataStream = env.addSource(consumer);
 
+        // Train Model Stream
+        DataStream<Tuple4<String, String, Long, Long>> trainModelStream = dataStream
+            .rebalance()
+            .assignTimestampsAndWatermarks(new CAdvisorTimestampExtractor())
+            .keyBy(CAdvisor.MACHINE_NAME_ID, CAdvisor.CONTAINER_NAME_ID) // Group by machine name and container name
+            //.timeWindow(Time.seconds(60))
+            .flatMap(new PredictionModel()); // Predict and refine model per machine and container
 
-        // Aggregate
-        DataStream<Tuple3<String, String, Long>> aggregatedByMinuteStream = dataStream
-                .rebalance()
-                .assignTimestampsAndWatermarks(new CAdvisorTimestampExtractor())
-                .map(new MapFunction<CAdvisor, Tuple3<String, String, CAdvisor>>() {
-                    @Override
-                    public Tuple3<String, String, CAdvisor> map(CAdvisor cAdvisor) throws Exception {
-                        return new Tuple3<String, String, CAdvisor>(cAdvisor.getMachineName(), cAdvisor.getContainerName(), cAdvisor);
-                    }
-                })
-                .keyBy(0, 1) // Group by machine name and container name
-                //.timeWindow(Time.seconds(60))
-                .flatMap(new PredictionModel()); // Predict and refine model per machine and container
-//                .apply(new CAdvisorCounter());
-//                .filter(new FilterFunction<Tuple3<String, String, Integer>>() {
-//                    @Override
-//                    public boolean filter(Tuple3<String, String, Integer> count) throws Exception {
-//                        return count.f2 >= 2;
-//                    }
-//                });
+        // Predict Model Stream
 
+        // Write the training model result (machineName, containerName, timestamp, ramUsage) to a new kafka stream
+        trainModelStream.addSink(new FlinkKafkaProducer08<>("ram-usage-data", new Tuple4Serialization(), props));
 
         // write kafka stream to standard out.
-        aggregatedByMinuteStream.print();
+        trainModelStream.print();
 
         System.out.println(env.getExecutionPlan());
 
         env.execute("Read from Kafka example");
+    }
+
+    public static class Tuple4Serialization implements SerializationSchema<Tuple4<String, String, Long, Long>> {
+
+        @Override
+        public byte[] serialize(Tuple4<String, String, Long, Long> element) {
+            JSONObject jo = new JSONObject();
+
+            try {
+                jo.put("machine_name", element.f0);
+                jo.put("container_name", element.f1);
+                jo.put("x", element.f2); // timestamp
+                jo.put("y", element.f3); // ram
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return jo.toString().getBytes();
+        }
     }
 
     /**
@@ -108,36 +127,51 @@ public class MinuteConsumer {
      *
      * Returns (MachineName, ContainerName, PredictedRAM)
      */
-    public static class PredictionModel extends RichFlatMapFunction<Tuple3<String, String, CAdvisor>, Tuple3<String, String, Long>> {
+    public static class PredictionModel extends RichFlatMapFunction<CAdvisor, Tuple4<String, String, Long, Long>> {
         private transient ValueState<RAMUsagePredictionModel> modelState;
 
         @Override
-        public void flatMap(Tuple3<String, String, CAdvisor> in, Collector<Tuple3<String, String, Long>> out) throws Exception {
+        public void flatMap(CAdvisor cAdvisor, Collector<Tuple4<String, String, Long, Long>> out) throws Exception {
             // Fetch operator state
             RAMUsagePredictionModel model = modelState.value();
 
-            CAdvisor cAdvisor = in.f2;
+            // Java does not support time granularity above milliseconds in its date patterns
+            // Which is a problem, since Go returns nanoseconds in time.Time
+            // https://docs.oracle.com/javase/tutorial/datetime/iso/instant.html
+            Instant instant = Instant.parse(cAdvisor.getTimestamp());
+            Long epoch = instant.getEpochSecond();
 
-            // Parse time
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-            Date parsedTime =  df.parse(cAdvisor.getTimestamp());
+            // Train the model
+            model.refineModel(epoch, cAdvisor.getContainerStats().getMemory().getUsage());
 
-            // TODO: This stream should only update the model, another stream should be used for predictions
-            // This code is based on: http://dataartisans.github.io/flink-training/exercises/timePrediction.html
-            if (((int)(Math.random() * 10)) == 2) {
-                System.out.printf("Predicting");
-                // Predict next RAM Usage value
-                Long predictedRamUsage = model.predictRamUsage(parsedTime.getTime());
+            // Update operator state
+            modelState.update(model);
 
-                // Emit prediction
-                out.collect(new Tuple3<>(cAdvisor.getMachineName(), cAdvisor.getContainerName(), predictedRamUsage));
-            } else {
-                // Train the model
-                model.refineModel(parsedTime.getTime(), cAdvisor.getContainerStats().getMemory().getUsage());
+            // Emit the used values to train the model
+            //Long y = Double.valueOf(((double)cAdvisor.getContainerStats().getCpu().getUsage().getSystem() / cAdvisor.getContainerStats().getCpu().getUsage().getTotal()) * 100).longValue(); // CPU
+            //Long y = cAdvisor.getContainerStats().getNetwork().getTxBytes();
+            Long y = cAdvisor.getContainerStats().getMemory().getUsage();
 
-                // Update operator state
-                modelState.update(model);
-            }
+            out.collect(new Tuple4<>(cAdvisor.getMachineName(), cAdvisor.getContainerName(), epoch, y));
+
+
+//
+//            // TODO: This stream should only update the model, another stream should be used for predictions
+//            // This code is based on: http://dataartisans.github.io/flink-training/exercises/timePrediction.html
+//            if (((int)(Math.random() * 10)) == 2) {
+//                System.out.printf("Predicting");
+//                // Predict next RAM Usage value
+//                Long predictedRamUsage = model.predictRamUsage(parsedTime.getTime());
+//
+//                // Emit prediction
+//                out.collect(new Tuple3<>(cAdvisor.getMachineName(), cAdvisor.getContainerName(), predictedRamUsage));
+//            } else {
+//                // Train the model
+//                model.refineModel(parsedTime.getTime(), cAdvisor.getContainerStats().getMemory().getUsage());
+//
+//                // Update operator state
+//                modelState.update(model);
+//            }
         }
 
         @Override
@@ -150,29 +184,6 @@ public class MinuteConsumer {
             );
 
             modelState = getRuntimeContext().getState(descriptor);
-        }
-    }
-
-    public static class CAdvisorCounter implements WindowFunction<
-            CAdvisor,                           // Input Type
-            Tuple4<String, String, Long, Integer>,    // Output type (machineName, containerName, count)
-            Tuple,                              // Key type (see keyBy for Tuple Size)
-            TimeWindow>                         // Window type
-    {
-
-        @Override
-        public void apply(Tuple key, TimeWindow timeWindow, Iterable<CAdvisor> iterable, Collector<Tuple4<String, String, Long, Integer>> out) throws Exception {
-            int count = 0;
-
-            String machineName = ((Tuple2<String, String>)key).f0;
-            String containerName = ((Tuple2<String, String>)key).f1;
-
-            for (CAdvisor c : iterable) {
-                count++;
-            }
-
-            System.out.println("Size: " + iterable.spliterator().getExactSizeIfKnown());
-            out.collect(new Tuple4<>(machineName, containerName, timeWindow.getEnd(), count));
         }
     }
 }
