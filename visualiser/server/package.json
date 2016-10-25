@@ -1,0 +1,11 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0",
+    "kafka-node": "^1.0.3",
+    "socket.io": "^1.5.1"
+  }
+}

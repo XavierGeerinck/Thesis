@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+
+        .axis--x path {
+          display: none;
+        }
+
+        .line {
+          fill: none;
+          stroke: steelblue;
+          stroke-width: 1.5px;
+        }
+
+        </style>
+
+        <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+
+    </head>
+    <body>
+
+        <div id="chart"></div>
+
+        <script>
+            // Add Data
+            var socket = io('http://localhost');
+            var points = {};
+
+            socket.on('data', function (data) {
+                var parsed = JSON.parse(data);
+
+                // Create points container if it doesn't exist
+                if (!points[parsed.container_name]) {
+                    points[parsed.container_name] = {};
+                    points[parsed.container_name].x = [];
+                    points[parsed.container_name].y = [];
+                    points[parsed.container_name].type = 'scatter';
+                }
+
+                // Push the data to the correct container
+                points[parsed.container_name].x.push(new Date(parsed.x * 1000));
+                points[parsed.container_name].y.push(parsed.y);
+
+                // Limit to maximum number of points
+                var numberOfPoints = 20;
+                if (points[parsed.container_name].x.length >= numberOfPoints) {
+                    points[parsed.container_name].x = points[parsed.container_name].x.splice(1, numberOfPoints);
+                    points[parsed.container_name].y = points[parsed.container_name].y.splice(1, numberOfPoints);
+                }
+
+
+                // Add to DOM
+                if (!document.querySelector('#chart-' + parsed.container_name.replace(new RegExp(/[\.\/]/, 'g'), ''))) {
+                    var p = document.createElement('p');
+                    p.innerHTML = parsed.container_name;
+                    document.body.appendChild(p);
+
+                    var div = document.createElement('div');
+                    div.setAttribute('id', 'chart-' + parsed.container_name.replace(new RegExp(/[\.\/]/, 'g'), ''));
+                    document.body.appendChild(div);
+                }
+
+                // Plot
+                Plotly.newPlot('chart-' + parsed.container_name.replace(new RegExp(/[\.\/]/, 'g'), ''), [ points[parsed.container_name] ]);
+            });
+
+
+        </script>
+    </body>
+</html>
