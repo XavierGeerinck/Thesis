@@ -1,14 +1,28 @@
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 
-public class RAMUsagePredictionModel {
+import java.util.HashMap;
 
-    SimpleRegression model;
+/**
+ * Collection of LinearRegression models for the different machines and containers
+ * This LinearRegression is of the form a + bx and is written as: y = intercept + slope * x
+ */
+public class RAMUsagePredictionModel {
+    // Create our SimpleRegression models for the machineName and containerName
+    private HashMap<String, HashMap<String, SimpleRegression>> models;
 
     public RAMUsagePredictionModel() {
-        model = new SimpleRegression(false); // Create simple regression that does not include intercept
+        this.models = new HashMap<>();
     }
 
-    public Long predictRamUsage(Long nextTime) {
+    public SimpleRegression getModel(String machineName, String containerName) {
+        this.models.putIfAbsent(machineName, new HashMap<>());
+        this.models.get(machineName).putIfAbsent(containerName, new SimpleRegression(false));
+
+        return this.models.get(machineName).get(containerName);
+    }
+
+    public Long predictRamUsage(String machineName, String containerName, Long nextTime) {
+        SimpleRegression model = getModel(machineName, containerName);
         double prediction = model.predict(nextTime.doubleValue());
 
         if (Double.isNaN(prediction)) {
@@ -21,7 +35,8 @@ public class RAMUsagePredictionModel {
     /**
      * Refines the RAMUsage Prediction model by adding a data point
      */
-    public void refineModel(Long time, Long ramUsage) {
+    public void refineModel(String machineName, String containerName, Long time, Long ramUsage) {
+        SimpleRegression model = getModel(machineName, containerName);
         model.addData(time.doubleValue(), ramUsage.doubleValue());
     }
 }

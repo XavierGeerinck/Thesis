@@ -1,15 +1,13 @@
 import com.google.gson.Gson;
 import com.twitter.chill.Tuple4Serializer;
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.apache.flink.api.common.functions.*;
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.api.java.tuple.Tuple;
-import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.api.java.tuple.Tuple3;
-import org.apache.flink.api.java.tuple.Tuple4;
+import org.apache.flink.api.java.tuple.*;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
@@ -26,6 +24,7 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer08;
 import org.apache.flink.streaming.util.serialization.SerializationSchema;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
+import org.apache.hadoop.util.hash.Hash;
 import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
 import org.w3c.dom.TypeInfo;
@@ -33,12 +32,12 @@ import pojo.CAdvisor;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -64,10 +63,13 @@ public class MinuteConsumer {
 
         // configure Kafka consumer
         Properties props = new Properties();
-        props.setProperty("zookeeper.connect", "10.0.7.13:2181"); // Zookeeper default host:port
-        props.setProperty("bootstrap.servers", "10.0.7.13:9092"); // Broker default host:port
-        props.setProperty("group.id", "myGroup");                 // Consumer group ID
-//        props.setProperty("auto.offset.reset", "earliest");       // Always read topic from start
+//        props.setProperty("zookeeper.connect", "10.0.7.13:2181");     // Zookeeper default host:port
+//        props.setProperty("bootstrap.servers", "10.0.7.13:9092");     // Broker default host:port
+        props.setProperty("zookeeper.connect", "10.48.98.232:2181");    // Zookeeper default host:port
+        props.setProperty("bootstrap.servers", "10.48.98.232:9092");    // Broker default host:port
+        props.setProperty("group.id", "myGroup");                       // Consumer group ID
+        //props.setProperty("log.retention.hours", "2");                  // How long to retain the logs before deleting them
+//        props.setProperty("auto.offset.reset", "earliest");           // Always read topic from start
 
         // Open Kafka Stream
         FlinkKafkaConsumer08<CAdvisor> consumer = new FlinkKafkaConsumer08<>(
@@ -81,18 +83,18 @@ public class MinuteConsumer {
 
         DataStream<CAdvisor> dataStream = env.addSource(consumer);
 
+        PredictionModel pm = new PredictionModel();
+
         // Train Model Stream
-        DataStream<Tuple4<String, String, Long, Long>> trainModelStream = dataStream
+        DataStream<Tuple7<String, String, Double, Double, Double, Long, Long>> trainModelStream = dataStream
             .rebalance()
             .assignTimestampsAndWatermarks(new CAdvisorTimestampExtractor())
             .keyBy(CAdvisor.MACHINE_NAME_ID, CAdvisor.CONTAINER_NAME_ID) // Group by machine name and container name
             //.timeWindow(Time.seconds(60))
             .flatMap(new PredictionModel()); // Predict and refine model per machine and container
 
-        // Predict Model Stream
-
         // Write the training model result (machineName, containerName, timestamp, ramUsage) to a new kafka stream
-        trainModelStream.addSink(new FlinkKafkaProducer08<>("ram-usage-data", new Tuple4Serialization(), props));
+        trainModelStream.addSink(new FlinkKafkaProducer08<>("ram-usage-data", new Tuple7Serialization(), props));
 
         // write kafka stream to standard out.
         trainModelStream.print();
@@ -102,17 +104,20 @@ public class MinuteConsumer {
         env.execute("Read from Kafka example");
     }
 
-    public static class Tuple4Serialization implements SerializationSchema<Tuple4<String, String, Long, Long>> {
+    public static class Tuple7Serialization implements SerializationSchema<Tuple7<String, String, Double, Double, Double, Long, Long>> {
 
         @Override
-        public byte[] serialize(Tuple4<String, String, Long, Long> element) {
+        public byte[] serialize(Tuple7<String, String, Double, Double, Double, Long, Long> element) {
             JSONObject jo = new JSONObject();
 
             try {
                 jo.put("machine_name", element.f0);
                 jo.put("container_name", element.f1);
-                jo.put("x", element.f2); // timestamp
-                jo.put("y", element.f3); // ram
+                jo.put("model_intercept", element.f2);
+                jo.put("model_slope", element.f3);
+                jo.put("model_slope_err", element.f4);
+                jo.put("x", element.f5); // timestamp
+                jo.put("y", element.f6); // ram
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -127,51 +132,50 @@ public class MinuteConsumer {
      *
      * Returns (MachineName, ContainerName, PredictedRAM)
      */
-    public static class PredictionModel extends RichFlatMapFunction<CAdvisor, Tuple4<String, String, Long, Long>> {
+    public static class PredictionModel extends RichFlatMapFunction<CAdvisor, Tuple7<String, String, Double, Double, Double, Long, Long>> {
+        // <MachineName <ContainerName <TrainModel>>>
         private transient ValueState<RAMUsagePredictionModel> modelState;
 
+        public ValueState<RAMUsagePredictionModel> getModelState() {
+            return modelState;
+        }
+
         @Override
-        public void flatMap(CAdvisor cAdvisor, Collector<Tuple4<String, String, Long, Long>> out) throws Exception {
+        public void flatMap(CAdvisor cAdvisor, Collector<Tuple7<String, String, Double, Double, Double, Long, Long>> out) throws Exception {
             // Fetch operator state
             RAMUsagePredictionModel model = modelState.value();
 
             // Java does not support time granularity above milliseconds in its date patterns
             // Which is a problem, since Go returns nanoseconds in time.Time
             // https://docs.oracle.com/javase/tutorial/datetime/iso/instant.html
-            Instant instant = Instant.parse(cAdvisor.getTimestamp());
-            Long epoch = instant.getEpochSecond();
+            //TemporalAccessor creationAccessor = DateTimeFormatter.ISO_DATE_TIME.parse( cAdvisor.getTimestamp() );
+            try {
+                Instant instant = Instant.parse(cAdvisor.getTimestamp());
+                Long epoch = instant.getEpochSecond();
 
-            // Train the model
-            model.refineModel(epoch, cAdvisor.getContainerStats().getMemory().getUsage());
+                // Train the model
+                model.refineModel(cAdvisor.getMachineName(), cAdvisor.getContainerName(), epoch, cAdvisor.getContainerStats().getMemory().getUsage());
 
-            // Update operator state
-            modelState.update(model);
+                // Update operator state
+                modelState.update(model);
 
-            // Emit the used values to train the model
-            //Long y = Double.valueOf(((double)cAdvisor.getContainerStats().getCpu().getUsage().getSystem() / cAdvisor.getContainerStats().getCpu().getUsage().getTotal()) * 100).longValue(); // CPU
-            //Long y = cAdvisor.getContainerStats().getNetwork().getTxBytes();
-            Long y = cAdvisor.getContainerStats().getMemory().getUsage();
+                // Emit the used values to train the model
+                //Long y = Double.valueOf(((double)cAdvisor.getContainerStats().getCpu().getUsage().getSystem() / cAdvisor.getContainerStats().getCpu().getUsage().getTotal()) * 100).longValue(); // CPU
+                //Long y = cAdvisor.getContainerStats().getNetwork().getTxBytes();
+                Long y = cAdvisor.getContainerStats().getMemory().getUsage();
 
-            out.collect(new Tuple4<>(cAdvisor.getMachineName(), cAdvisor.getContainerName(), epoch, y));
+                SimpleRegression simpleRegression = model.getModel(cAdvisor.getMachineName(), cAdvisor.getContainerName());
 
+                out.collect(new Tuple7<>(cAdvisor.getMachineName(), // string
+                        cAdvisor.getContainerName(),        // string
+                        simpleRegression.getIntercept(),    // double
+                        simpleRegression.getSlope(),        // double
+                        simpleRegression.getSlopeStdErr(),  // double
+                        epoch,                              // long
+                        y));                                // long
+            } catch (DateTimeParseException ex) {
 
-//
-//            // TODO: This stream should only update the model, another stream should be used for predictions
-//            // This code is based on: http://dataartisans.github.io/flink-training/exercises/timePrediction.html
-//            if (((int)(Math.random() * 10)) == 2) {
-//                System.out.printf("Predicting");
-//                // Predict next RAM Usage value
-//                Long predictedRamUsage = model.predictRamUsage(parsedTime.getTime());
-//
-//                // Emit prediction
-//                out.collect(new Tuple3<>(cAdvisor.getMachineName(), cAdvisor.getContainerName(), predictedRamUsage));
-//            } else {
-//                // Train the model
-//                model.refineModel(parsedTime.getTime(), cAdvisor.getContainerStats().getMemory().getUsage());
-//
-//                // Update operator state
-//                modelState.update(model);
-//            }
+            }
         }
 
         @Override

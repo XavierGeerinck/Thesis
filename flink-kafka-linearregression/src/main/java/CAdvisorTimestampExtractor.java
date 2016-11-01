@@ -9,8 +9,14 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
+
 
 public class CAdvisorTimestampExtractor extends BoundedOutOfOrdernessTimestampExtractor<CAdvisor> {
     private static final int MAX_EVENT_DELAY = 60; // Max time between events
@@ -21,16 +27,21 @@ public class CAdvisorTimestampExtractor extends BoundedOutOfOrdernessTimestampEx
 
     @Override
     public long extractTimestamp(CAdvisor cAdvisor) {
-        // Parse time
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-        Date parsedTime = null;
+//        String removedNanoseconds = cAdvisor.getTimestamp().substring(0, cAdvisor.getTimestamp().indexOf('.')) + 'Z';
+//        DateTimeFormatter FORMAT_DT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC);
+//        LocalDateTime ldt = LocalDateTime.from(FORMAT_DT.parse(removedNanoseconds));
+//        Instant instant = Instant.from(ldt.atZone(ZoneOffset.UTC));
+
+        Instant instant = null;
+        Long epoch = -1L;
 
         try {
-            parsedTime = df.parse(cAdvisor.getTimestamp());
-        } catch (ParseException e) {
-            e.printStackTrace();
+            instant = Instant.parse(cAdvisor.getTimestamp());
+            epoch = instant.getEpochSecond();
+        } catch (DateTimeException ex) {
+            System.out.println(ex.getMessage());
         }
 
-        return parsedTime.getTime();
+        return epoch;
     }
 }

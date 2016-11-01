@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+
+        .axis--x path {
+            display: none;
+        }
+
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+
+    </style>
+
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+</head>
+<body>
+
+<div id="chart"></div>
+
+<script>
+    // Add Data
+    var socket = io('http://127.0.0.1:8000');
+
+    socket.on('data', function (data) {
+        var parsed = JSON.parse(data);
+
+        // Add to DOM, we want to show: CONTAINER_NAME: Linear Equation
+        var escapedContainerName = parsed.container_name.replace(new RegExp(/[\.\/]/, 'g'), '');
+
+        if (!document.querySelector('#container-' + escapedContainerName)) {
+            var div = document.createElement('div');
+            div.setAttribute('id', 'container-' + escapedContainerName);
+
+            var p = document.createElement('p');
+            p.innerHTML = parsed.container_name;
+            document.body.appendChild(p);
+
+            var p2 = document.createElement('p');
+            p2.setAttribute('id', 'equation-' + escapedContainerName);
+            p2.innerHTML = 'y = ' + parsed.model_slope + 'x + ' + parsed.model_intercept + ' with err: ' + parsed.model_slope_err;
+
+            div.appendChild(p);
+            div.appendChild(p2);
+
+            document.body.appendChild(div);
+        } else {
+            // y = intercept + slope * x
+            var element = document.querySelector('#equation-' + escapedContainerName);
+            var threshold = parsed.y + (1 * 1024 * 1024); // 20 Mb above current value
+            var calculate = (threshold - parsed.model_intercept) / parsed.model_slope;
+
+            var t = threshold;
+            var b = parsed.model_intercept;
+            var a = parsed.model_slope;
+
+            var result = (t - b) / a;
+
+            element.innerHTML = 'y = '
+                    + parsed.model_slope + 'x + ' + parsed.model_intercept
+                    + ' <br />with err: ' + parsed.model_slope_err
+                    + ' <br />Original Y: &nbsp;' + parsed.y
+                    + ' <br />Predicted Y: ' + (parsed.model_slope * parsed.x + parsed.model_intercept)
+                    + ' <br />Threshold: &nbsp;' + threshold
+                    + ' <br />Original X: &nbsp;&nbsp;' + parsed.x + ' == ' + new Date(parsed.x * 1000)
+                    + ' <br />Predicted X: ' + result + ' == ' + new Date(result * 1000);
+        }
+    });
+
+
+</script>
+</body>
+</html>

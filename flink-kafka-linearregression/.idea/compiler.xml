@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="flink-kafka-linearregression" />
         <module name="kafka-example" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="flink-kafka-linearregression" target="1.8" />
       <module name="kafka-example" target="1.8" />
     </bytecodeTargetLevel>
   </component>
