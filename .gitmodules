@@ -1,0 +1,3 @@
+[submodule "Docker-Swarm-Visualizer"]
+	path = Docker-Swarm-Visualizer
+	url = https://github.com/thebillkidy/Docker-Swarm-Visualizer.git
