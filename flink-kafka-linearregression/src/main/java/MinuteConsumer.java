@@ -1,46 +1,27 @@
-import com.google.gson.Gson;
-import com.twitter.chill.Tuple4Serializer;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
-import org.apache.flink.api.common.functions.*;
-import org.apache.flink.api.common.restartstrategy.RestartStrategies;
+import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.api.java.tuple.*;
+import org.apache.flink.api.java.tuple.Tuple7;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
 import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
-import org.apache.flink.streaming.api.windowing.windows.Window;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer08;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer082;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer08;
 import org.apache.flink.streaming.util.serialization.SerializationSchema;
-import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
-import org.apache.hadoop.util.hash.Hash;
 import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.commons.json.JSONObject;
-import org.w3c.dom.TypeInfo;
 import pojo.CAdvisor;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.TemporalAccessor;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class MinuteConsumer {
     public static void main(String[] args) throws Exception {
@@ -93,11 +74,20 @@ public class MinuteConsumer {
             //.timeWindow(Time.seconds(60))
             .flatMap(new PredictionModel()); // Predict and refine model per machine and container
 
-        // Write the training model result (machineName, containerName, timestamp, ramUsage) to a new kafka stream
-        trainModelStream.addSink(new FlinkKafkaProducer08<>("ram-usage-data", new Tuple7Serialization(), props));
+        DataStream<Tuple7<String, String, Double, Double, Double, Long, Long>> newStream = trainModelStream
+                .keyBy(0, 1) // Key on machine name and container name
+                //.timeWindow(Time.seconds(10))
+                .countWindow(10) // Count 10 items and return the result
+                .maxBy(5); // And return the maximum value of our x value (latest training model)
 
-        // write kafka stream to standard out.
-        trainModelStream.print();
+        newStream.addSink(new FlinkKafkaProducer08<>("ram-usage-data", new Tuple7Serialization(), props));
+
+        // Write the training model result (machineName, containerName, timestamp, ramUsage) to a new kafka stream
+        //trainModelStream.addSink(new FlinkKafkaProducer08<>("ram-usage-data", new Tuple7Serialization(), props));
+
+        // Print the processed stream that gets sent to the frontend on stdout
+        //trainModelStream.print();
+        newStream.print();
 
         System.out.println(env.getExecutionPlan());
 

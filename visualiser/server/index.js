@@ -8,7 +8,7 @@ const offset = new kafka.Offset(client);
 const app = require('express')();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-server.listen(8000);
+server.listen(5001);
 
 let sockets = [];
 
@@ -21,7 +21,19 @@ app.get('/linear_regression', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    sockets.push(socket);
+    console.log(`Client ${socket.id} connected`);
+
+    sockets[socket.id] = socket;
+
+    // socket.on('event', (data) => {
+    // 	// Not implemented
+    // });
+
+    // On disconnect, remove it
+    socket.on('disconnect', () => {
+        console.log(`Client ${socket.id} disconnected, removing it...`);
+        delete sockets[socket.id];
+    });
 });
 
 const topicName = 'ram-usage-data';
@@ -45,8 +57,12 @@ offset.fetchLatestOffsets([ topicName ], function (error, offsets) {
     );
 
     consumer.on('message', function (message) {
-        for (var socket of sockets) {
-            socket.emit('data', message.value);
+        console.log(`sending to ${Object.keys(sockets).length} sockets`);
+        for (var socket in sockets) {
+            sockets[socket].emit('data', {
+                type: 'ALERT',
+                data: JSON.parse(message.value)
+            });
         }
     });
 

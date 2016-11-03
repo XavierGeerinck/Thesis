@@ -22,91 +22,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MinuteConsumer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MinuteConsumer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/MinuteConsumer.java">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="121">
-              <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+            <state relative-caret-position="17">
+              <caret line="79" column="72" selection-start-line="79" selection-start-column="72" selection-end-line="79" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#6889#6890#0" expanded="true" />
-                <element signature="e#6930#6931#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CAdvisorDeserializer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/CAdvisorDeserializer.java">
+      <file leaf-file-name="KeyedStream.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-streaming-java_2.10/1.1.3/flink-streaming-java_2.10-1.1.3.jar!/org/apache/flink/streaming/api/datastream/KeyedStream.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+            <state relative-caret-position="147">
+              <caret line="109" column="56" selection-start-line="109" selection-start-column="56" selection-end-line="109" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CAdvisor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/pojo/CAdvisor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="69" column="18" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
-              <folding>
-                <element signature="e#1837#1838#0" expanded="true" />
-                <element signature="e#1869#1870#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RAMUsagePredictionSource.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/RAMUsagePredictionSource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1642#1643#0" expanded="true" />
-                <element signature="e#1680#1681#0" expanded="true" />
-              </folding>
-=======
-            <state relative-caret-position="833">
-              <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-              <folding />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RAMUsagePredictionModel.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RAMUsagePredictionModel.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/RAMUsagePredictionModel.java">
           <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-            <state relative-caret-position="195">
-              <caret line="18" column="84" selection-start-line="18" selection-start-column="68" selection-end-line="18" selection-end-column="84" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#505#506#0" expanded="true" />
-                <element signature="e#550#551#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CAdvisorTimestampExtractor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/CAdvisorTimestampExtractor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-=======
-            <state relative-caret-position="425">
+            <state relative-caret-position="345">
               <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
             </state>
           </provider>
         </entry>
@@ -114,9 +57,32 @@
       <file leaf-file-name="DateTimeFormatter.java" pinned="false" current-in-tab="false">
         <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/src.zip!/java/time/format/DateTimeFormatter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
+            <state relative-caret-position="27375">
               <caret line="1935" column="29" selection-start-line="1935" selection-start-column="29" selection-end-line="1935" selection-end-column="29" />
-              <folding />
+              <folding>
+                <element signature="e#0#99754#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#59977#59978#0" expanded="false" />
+                <element signature="e#60018#60019#0" expanded="false" />
+                <element signature="e#61937#61938#0" expanded="false" />
+                <element signature="e#61978#61979#0" expanded="false" />
+                <element signature="e#63820#63821#0" expanded="false" />
+                <element signature="e#63849#63850#0" expanded="false" />
+                <element signature="e#64810#64811#0" expanded="false" />
+                <element signature="e#64845#64846#0" expanded="false" />
+                <element signature="e#65978#65979#0" expanded="false" />
+                <element signature="e#66007#66008#0" expanded="false" />
+                <element signature="e#68565#68566#0" expanded="false" />
+                <element signature="e#68592#68593#0" expanded="false" />
+                <element signature="e#71392#71393#0" expanded="false" />
+                <element signature="e#71428#71429#0" expanded="false" />
+                <element signature="e#73375#73376#0" expanded="false" />
+                <element signature="e#73412#73413#0" expanded="false" />
+                <element signature="e#94210#94211#0" expanded="false" />
+                <element signature="e#94269#94270#0" expanded="false" />
+                <element signature="e#94923#94924#0" expanded="false" />
+                <element signature="e#94975#94976#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -124,9 +90,48 @@
       <file leaf-file-name="Instant.java" pinned="false" current-in-tab="false">
         <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/src.zip!/java/time/Instant.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="4620">
               <caret line="402" column="27" selection-start-line="402" selection-start-column="27" selection-end-line="402" selection-end-column="27" />
-              <folding />
+              <folding>
+                <element signature="e#0#61101#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#11745#11746#0" expanded="false" />
+                <element signature="e#11795#11796#0" expanded="false" />
+                <element signature="e#12881#12882#0" expanded="false" />
+                <element signature="e#12926#12927#0" expanded="false" />
+                <element signature="e#22688#22689#0" expanded="false" />
+                <element signature="e#22738#22739#0" expanded="false" />
+                <element signature="e#27277#27278#0" expanded="false" />
+                <element signature="e#27307#27308#0" expanded="false" />
+                <element signature="e#27703#27704#0" expanded="false" />
+                <element signature="e#27731#27732#0" expanded="false" />
+                <element signature="e#28774#28775#0" expanded="false" />
+                <element signature="e#28832#28833#0" expanded="false" />
+                <element signature="e#35380#35381#0" expanded="false" />
+                <element signature="e#35436#35437#0" expanded="false" />
+                <element signature="e#40135#40136#0" expanded="false" />
+                <element signature="e#40179#40180#0" expanded="false" />
+                <element signature="e#40748#40749#0" expanded="false" />
+                <element signature="e#40828#40829#0" expanded="false" />
+                <element signature="e#41391#41392#0" expanded="false" />
+                <element signature="e#41433#41434#0" expanded="false" />
+                <element signature="e#43744#43745#0" expanded="false" />
+                <element signature="e#43812#43813#0" expanded="false" />
+                <element signature="e#55106#55107#0" expanded="false" />
+                <element signature="e#55167#55168#0" expanded="false" />
+                <element signature="e#55892#55893#0" expanded="false" />
+                <element signature="e#55950#55951#0" expanded="false" />
+                <element signature="e#58022#58023#0" expanded="false" />
+                <element signature="e#58072#58073#0" expanded="false" />
+                <element signature="e#58494#58495#0" expanded="false" />
+                <element signature="e#58544#58545#0" expanded="false" />
+                <element signature="e#59440#59441#0" expanded="false" />
+                <element signature="e#59512#59513#0" expanded="false" />
+                <element signature="e#59893#59894#0" expanded="false" />
+                <element signature="e#59958#59959#0" expanded="false" />
+                <element signature="e#60431#60432#0" expanded="false" />
+                <element signature="e#60485#60486#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -158,8 +163,8 @@
         <option value="$PROJECT_DIR$/src/main/java/RAMUsagePredictionModel.java" />
         <option value="$PROJECT_DIR$/src/main/java/Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/CAdvisorTimestampExtractor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/MinuteConsumer.java" />
         <option value="$PROJECT_DIR$/src/main/java/Test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MinuteConsumer.java" />
       </list>
     </option>
   </component>
@@ -211,9 +216,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -274,6 +277,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -287,7 +292,7 @@
       <recent name="E:\Projects\kafka-example-master\src\main\java" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Test">
+  <component name="RunManager" selected="Application.MinuteConsumer">
     <configuration default="false" name="ReadFromKafka" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="com.dataartisans.ReadFromKafka" />
@@ -318,27 +323,8 @@
       <envs />
       <method />
     </configuration>
-<<<<<<< HEAD
-    <configuration default="false" name="HelloWorld" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="HelloWorld" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="flink-kafka-linearregression" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="false" name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-=======
-    <configuration default="false" name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
       <option name="MAIN_CLASS_NAME" value="Test" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
@@ -579,6 +565,7 @@
       <setting name="cmdLine" value="run-app" />
       <setting name="passParentEnv" value="true" />
       <setting name="launchBrowser" value="true" />
+      <setting name="depsClasspath" value="false" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <method />
     </configuration>
@@ -762,23 +749,9 @@
     <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
       <method />
     </configuration>
-<<<<<<< HEAD
     <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
       <method />
     </configuration>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="Application.ReadFromKafka" />
-      <item index="1" class="java.lang.String" itemvalue="Application.MinuteConsumer" />
-      <item index="2" class="java.lang.String" itemvalue="Application.HelloWorld" />
-      <item index="3" class="java.lang.String" itemvalue="Application.Test" />
-    </list>
-    <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Application.MinuteConsumer" />
-        <item index="1" class="java.lang.String" itemvalue="Application.Test" />
-        <item index="2" class="java.lang.String" itemvalue="Application.HelloWorld" />
-        <item index="3" class="java.lang.String" itemvalue="Application.ReadFromKafka" />
-=======
     <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.ReadFromKafka" />
       <item index="1" class="java.lang.String" itemvalue="Application.MinuteConsumer" />
@@ -786,10 +759,9 @@
     </list>
     <recent_temporary>
       <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Application.Test" />
-        <item index="1" class="java.lang.String" itemvalue="Application.MinuteConsumer" />
+        <item index="0" class="java.lang.String" itemvalue="Application.MinuteConsumer" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Test" />
         <item index="2" class="java.lang.String" itemvalue="Application.ReadFromKafka" />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
       </list>
     </recent_temporary>
   </component>
@@ -808,21 +780,14 @@
       <workItem from="1477237022458" duration="4524000" />
       <workItem from="1477294907519" duration="12473000" />
       <workItem from="1477312627586" duration="430000" />
-<<<<<<< HEAD
       <workItem from="1477388051826" duration="9584000" />
       <workItem from="1477467160460" duration="20496000" />
-=======
-      <workItem from="1477388051826" duration="10778000" />
-      <workItem from="1477603154547" duration="105000" />
-      <workItem from="1477904828282" duration="515000" />
-      <workItem from="1477906122956" duration="1918000" />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
+      <workItem from="1478162069383" duration="2761000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-<<<<<<< HEAD
-    <option name="totallyTimeSpent" value="48642000" />
+    <option name="totallyTimeSpent" value="51403000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -839,47 +804,30 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-=======
-    <option name="totallyTimeSpent" value="31878000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
-    <editor active="false" />
-    <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38354254" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34309623" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-<<<<<<< HEAD
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-=======
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42677826" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34355178" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -912,140 +860,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-<<<<<<< HEAD
-=======
-    <entry file="file://$PROJECT_DIR$/src/main/java/MinuteConsumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RAMUsagePredictionModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MinuteConsumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RAMUsagePredictionModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MinuteConsumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RAMUsagePredictionModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/dataartisans/ReadFromKafka.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
-    <entry file="file://$PROJECT_DIR$/src/main/java/MinuteConsumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1972">
-          <caret line="149" column="14" selection-start-line="149" selection-start-column="14" selection-end-line="149" selection-end-column="14" />
-<<<<<<< HEAD
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6889#6890#0" expanded="true" />
-            <element signature="e#6930#6931#0" expanded="true" />
-          </folding>
-=======
-          <folding />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/RAMUsagePredictionModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
-<<<<<<< HEAD
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#505#506#0" expanded="true" />
-            <element signature="e#550#551#0" expanded="true" />
-          </folding>
-=======
-          <folding />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/CAdvisorTimestampExtractor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="15" column="49" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pojo/CAdvisor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-<<<<<<< HEAD
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1837#1838#0" expanded="true" />
-            <element signature="e#1869#1870#0" expanded="true" />
-            <element signature="e#1992#1993#0" expanded="false" />
-            <element signature="e#2034#2035#0" expanded="false" />
-            <element signature="e#2138#2139#0" expanded="false" />
-            <element signature="e#2172#2173#0" expanded="false" />
-            <element signature="e#2304#2305#0" expanded="false" />
-            <element signature="e#2350#2351#0" expanded="false" />
-            <element signature="e#2458#2459#0" expanded="false" />
-            <element signature="e#2494#2495#0" expanded="false" />
-            <element signature="e#2634#2635#0" expanded="false" />
-            <element signature="e#2684#2685#0" expanded="false" />
-            <element signature="e#2788#2789#0" expanded="false" />
-            <element signature="e#2822#2823#0" expanded="false" />
-            <element signature="e#2954#2955#0" expanded="false" />
-            <element signature="e#3000#3001#0" expanded="false" />
-            <element signature="e#3121#3122#0" expanded="false" />
-            <element signature="e#3159#3160#0" expanded="false" />
-            <element signature="e#3316#3317#0" expanded="false" />
-            <element signature="e#3370#3371#0" expanded="false" />
-            <element signature="e#3488#3489#0" expanded="false" />
-            <element signature="e#3525#3526#0" expanded="false" />
-            <element signature="e#3677#3678#0" expanded="false" />
-            <element signature="e#3729#3730#0" expanded="false" />
-            <element signature="e#3775#3776#0" expanded="false" />
-            <element signature="e#3838#3839#0" expanded="false" />
-          </folding>
-=======
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
         </state>
       </provider>
     </entry>
@@ -1053,16 +871,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
-          <folding>
-            <element signature="e#846#847#0" expanded="false" />
-            <element signature="e#874#875#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-connector-kafka-0.8_2.10/1.1.3/flink-connector-kafka-0.8_2.10-1.1.3.jar!/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumer08.class" />
-=======
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-connector-kafka-0.8_2.10/1.1.3/flink-connector-kafka-0.8_2.10-1.1.3.jar!/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumer08.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -1070,7 +882,6 @@
         </state>
       </provider>
     </entry>
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
     <entry file="file://$PROJECT_DIR$/src/main/java/pojo/Cfs.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1097,15 +908,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-<<<<<<< HEAD
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#6889#6890#0" expanded="true" />
-            <element signature="e#6930#6931#0" expanded="true" />
           </folding>
-=======
-          <folding />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
         </state>
       </provider>
     </entry>
@@ -1113,15 +918,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="45" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
-<<<<<<< HEAD
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#505#506#0" expanded="true" />
-            <element signature="e#550#551#0" expanded="true" />
-          </folding>
-=======
           <folding />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
         </state>
       </provider>
     </entry>
@@ -1129,7 +926,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="15" column="49" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1137,38 +936,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-<<<<<<< HEAD
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1837#1838#0" expanded="true" />
-            <element signature="e#1869#1870#0" expanded="true" />
-            <element signature="e#1992#1993#0" expanded="false" />
-            <element signature="e#2034#2035#0" expanded="false" />
-            <element signature="e#2138#2139#0" expanded="false" />
-            <element signature="e#2172#2173#0" expanded="false" />
-            <element signature="e#2304#2305#0" expanded="false" />
-            <element signature="e#2350#2351#0" expanded="false" />
-            <element signature="e#2458#2459#0" expanded="false" />
-            <element signature="e#2494#2495#0" expanded="false" />
-            <element signature="e#2634#2635#0" expanded="false" />
-            <element signature="e#2684#2685#0" expanded="false" />
-            <element signature="e#2788#2789#0" expanded="false" />
-            <element signature="e#2822#2823#0" expanded="false" />
-            <element signature="e#2954#2955#0" expanded="false" />
-            <element signature="e#3000#3001#0" expanded="false" />
-            <element signature="e#3121#3122#0" expanded="false" />
-            <element signature="e#3159#3160#0" expanded="false" />
-            <element signature="e#3316#3317#0" expanded="false" />
-            <element signature="e#3370#3371#0" expanded="false" />
-            <element signature="e#3488#3489#0" expanded="false" />
-            <element signature="e#3525#3526#0" expanded="false" />
-            <element signature="e#3677#3678#0" expanded="false" />
-            <element signature="e#3729#3730#0" expanded="false" />
-            <element signature="e#3775#3776#0" expanded="false" />
-            <element signature="e#3838#3839#0" expanded="false" />
-          </folding>
-=======
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1176,24 +944,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
-          <folding>
-            <element signature="e#846#847#0" expanded="false" />
-            <element signature="e#874#875#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-connector-kafka-0.8_2.10/1.1.3/flink-connector-kafka-0.8_2.10-1.1.3.jar!/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumer08.class" />
-=======
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-connector-kafka-0.8_2.10/1.1.3/flink-connector-kafka-0.8_2.10-1.1.3.jar!/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumer08.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
     <entry file="file://$PROJECT_DIR$/src/main/java/pojo/Cfs.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1260,17 +1015,7 @@
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-connector-kafka-0.8_2.10/1.1.3/flink-connector-kafka-0.8_2.10-1.1.3.jar!/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumer08.class" />
-=======
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-connector-kafka-0.8_2.10/1.1.3/flink-connector-kafka-0.8_2.10-1.1.3.jar!/org/apache/flink/streaming/connectors/kafka/FlinkKafkaConsumer08.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="48" column="11" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-core/1.1.3/flink-core-1.1.3.jar!/org/apache/flink/api/common/typeinfo/BasicTypeInfo.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1309,14 +1054,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/dataartisans/ReadFromKafka.java">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
         <state relative-caret-position="314">
           <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
-          <folding />
-=======
-        <state relative-caret-position="493">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
         </state>
       </provider>
     </entry>
@@ -1324,7 +1063,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="363">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="54" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1333,7 +1071,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1341,7 +1078,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
           <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1349,7 +1085,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1357,7 +1092,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1365,42 +1099,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="195" column="36" selection-start-line="195" selection-start-column="8" selection-end-line="195" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/src.zip!/java/lang/Thread.java">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
         <state relative-caret-position="143">
           <caret line="743" column="0" selection-start-line="743" selection-start-column="0" selection-end-line="743" selection-end-column="0" />
-          <folding />
-=======
-        <state relative-caret-position="314">
-          <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
         </state>
       </provider>
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/jre/lib/rt.jar!/sun/nio/ch/SocketChannelImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
         <state relative-caret-position="143">
           <caret line="853" column="0" selection-start-line="853" selection-start-column="0" selection-end-line="853" selection-end-column="0" />
-          <folding />
-=======
-        <state relative-caret-position="363">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="54" selection-end-column="43" />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-clients/0.8.2.2/kafka-clients-0.8.2.2.jar!/org/apache/kafka/clients/producer/internals/Sender.class">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
         <state relative-caret-position="126">
           <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1409,9 +1128,9 @@
         <state relative-caret-position="77">
           <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1642#1643#0" expanded="true" />
-            <element signature="e#1680#1681#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1642#1643#0" expanded="false" />
+            <element signature="e#1680#1681#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1420,43 +1139,95 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
           <caret line="69" column="18" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
-          <folding>
-            <element signature="e#1837#1838#0" expanded="true" />
-            <element signature="e#1869#1870#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/src.zip!/java/time/Instant.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="4620">
           <caret line="402" column="27" selection-start-line="402" selection-start-column="27" selection-end-line="402" selection-end-column="27" />
-          <folding />
+          <folding>
+            <element signature="e#0#61101#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#11745#11746#0" expanded="false" />
+            <element signature="e#11795#11796#0" expanded="false" />
+            <element signature="e#12881#12882#0" expanded="false" />
+            <element signature="e#12926#12927#0" expanded="false" />
+            <element signature="e#22688#22689#0" expanded="false" />
+            <element signature="e#22738#22739#0" expanded="false" />
+            <element signature="e#27277#27278#0" expanded="false" />
+            <element signature="e#27307#27308#0" expanded="false" />
+            <element signature="e#27703#27704#0" expanded="false" />
+            <element signature="e#27731#27732#0" expanded="false" />
+            <element signature="e#28774#28775#0" expanded="false" />
+            <element signature="e#28832#28833#0" expanded="false" />
+            <element signature="e#35380#35381#0" expanded="false" />
+            <element signature="e#35436#35437#0" expanded="false" />
+            <element signature="e#40135#40136#0" expanded="false" />
+            <element signature="e#40179#40180#0" expanded="false" />
+            <element signature="e#40748#40749#0" expanded="false" />
+            <element signature="e#40828#40829#0" expanded="false" />
+            <element signature="e#41391#41392#0" expanded="false" />
+            <element signature="e#41433#41434#0" expanded="false" />
+            <element signature="e#43744#43745#0" expanded="false" />
+            <element signature="e#43812#43813#0" expanded="false" />
+            <element signature="e#55106#55107#0" expanded="false" />
+            <element signature="e#55167#55168#0" expanded="false" />
+            <element signature="e#55892#55893#0" expanded="false" />
+            <element signature="e#55950#55951#0" expanded="false" />
+            <element signature="e#58022#58023#0" expanded="false" />
+            <element signature="e#58072#58073#0" expanded="false" />
+            <element signature="e#58494#58495#0" expanded="false" />
+            <element signature="e#58544#58545#0" expanded="false" />
+            <element signature="e#59440#59441#0" expanded="false" />
+            <element signature="e#59512#59513#0" expanded="false" />
+            <element signature="e#59893#59894#0" expanded="false" />
+            <element signature="e#59958#59959#0" expanded="false" />
+            <element signature="e#60431#60432#0" expanded="false" />
+            <element signature="e#60485#60486#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/src.zip!/java/time/format/DateTimeFormatter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
+        <state relative-caret-position="27375">
           <caret line="1935" column="29" selection-start-line="1935" selection-start-column="29" selection-end-line="1935" selection-end-column="29" />
-          <folding />
+          <folding>
+            <element signature="e#0#99754#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#59977#59978#0" expanded="false" />
+            <element signature="e#60018#60019#0" expanded="false" />
+            <element signature="e#61937#61938#0" expanded="false" />
+            <element signature="e#61978#61979#0" expanded="false" />
+            <element signature="e#63820#63821#0" expanded="false" />
+            <element signature="e#63849#63850#0" expanded="false" />
+            <element signature="e#64810#64811#0" expanded="false" />
+            <element signature="e#64845#64846#0" expanded="false" />
+            <element signature="e#65978#65979#0" expanded="false" />
+            <element signature="e#66007#66008#0" expanded="false" />
+            <element signature="e#68565#68566#0" expanded="false" />
+            <element signature="e#68592#68593#0" expanded="false" />
+            <element signature="e#71392#71393#0" expanded="false" />
+            <element signature="e#71428#71429#0" expanded="false" />
+            <element signature="e#73375#73376#0" expanded="false" />
+            <element signature="e#73412#73413#0" expanded="false" />
+            <element signature="e#94210#94211#0" expanded="false" />
+            <element signature="e#94269#94270#0" expanded="false" />
+            <element signature="e#94923#94924#0" expanded="false" />
+            <element signature="e#94975#94976#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/CAdvisorTimestampExtractor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
           <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1466,47 +1237,41 @@
         <state relative-caret-position="45">
           <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
           <folding />
-=======
-        <state relative-caret-position="197">
-          <caret line="1850" column="0" selection-start-line="1850" selection-start-column="0" selection-end-line="1850" selection-end-column="0" />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MinuteConsumer.java">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="195">
-          <caret line="18" column="84" selection-start-line="18" selection-start-column="68" selection-end-line="18" selection-end-column="84" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#505#506#0" expanded="true" />
-            <element signature="e#550#551#0" expanded="true" />
-          </folding>
-=======
-        <state relative-caret-position="833">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Test.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/RAMUsagePredictionModel.java">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state relative-caret-position="121">
-          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6889#6890#0" expanded="true" />
-            <element signature="e#6930#6931#0" expanded="true" />
-          </folding>
-=======
-        <state relative-caret-position="425">
+        <state relative-caret-position="345">
           <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
->>>>>>> d0a7741b20cd5ec927051836e3e34310f8ddd38a
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-streaming-java_2.10/1.1.3/flink-streaming-java_2.10-1.1.3.jar!/org/apache/flink/streaming/api/datastream/KeyedStream.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="109" column="56" selection-start-line="109" selection-start-column="56" selection-end-line="109" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/flink/flink-streaming-java_2.10/1.1.3/flink-streaming-java_2.10-1.1.3.jar!/org/apache/flink/streaming/api/datastream/WindowedStream.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="252" column="41" selection-start-line="252" selection-start-column="41" selection-end-line="252" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/MinuteConsumer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="79" column="72" selection-start-line="79" selection-start-column="72" selection-end-line="79" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

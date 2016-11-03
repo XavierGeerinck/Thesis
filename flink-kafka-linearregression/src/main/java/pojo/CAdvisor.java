@@ -12,6 +12,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class CAdvisor {
     public static final String MACHINE_NAME_ID = "machineName";
     public static final String CONTAINER_NAME_ID = "containerName";
+    public static final String TIMESTAMP_ID = "timestamp";
 
     @SerializedName("timestamp")
     @Expose
