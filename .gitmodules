@@ -1,3 +1,7 @@
 [submodule "Docker-Swarm-Visualizer"]
 	path = Docker-Swarm-Visualizer
 	url = https://github.com/thebillkidy/Docker-Swarm-Visualizer.git
+
+[submodule "vagrant-swarm-cluster"]
+	path = vagrant-swarm-cluster
+	url = https://github.com/thebillkidy/vagrant-swarm-cluster.git
