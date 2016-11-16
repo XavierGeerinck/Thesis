@@ -36,10 +36,9 @@ io.on('connection', (socket) => {
     });
 });
 
-const topicName = 'ram-usage-data';
+const topicName = 'models-bundled';
 const partition = 0;
-
-offset.fetchLatestOffsets([ topicName ], function (error, offsets) {
+offset.fetchLatestOffsets([ 'container_stats', 'models-bundled' ], function (error, offsets) {
     if (error)
         return handleError(error);
 
@@ -48,21 +47,37 @@ offset.fetchLatestOffsets([ topicName ], function (error, offsets) {
     var consumer = new Consumer(
         client,
         [
-            { topic: topicName, partition: 0, offset: latestOffset }
+            { topic: 'models-bundled', partition: 0, offset: offsets['models-bundled'][0] },
+            { topic: 'container_stats', partition: 0, offset: offsets['container_stats'][0] }
         ],
         {
             autoCommit: false,
-            //fromOffset: true
+            fromOffset: true
         }
     );
 
     consumer.on('message', function (message) {
         console.log(`sending to ${Object.keys(sockets).length} sockets`);
-        for (var socket in sockets) {
-            sockets[socket].emit('data', {
-                type: 'ALERT',
-                data: JSON.parse(message.value)
-            });
+
+        switch (message.topic) {
+            case 'models-bundled':
+                for (var socket in sockets) {
+                    sockets[socket].emit('data', {
+                        type: 'MODEL',
+                        data: JSON.parse(message.value)
+                    });
+                }
+                break;
+            case 'container_stats':
+                for (var socket in sockets) {
+                    sockets[socket].emit('data', {
+                        type: 'STATS',
+                        data: JSON.parse(message.value)
+                    });
+                }
+                break;
+            default:
+                // Not implemented
         }
     });
 
