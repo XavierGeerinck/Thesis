@@ -1,5 +1,6 @@
 import com.dataartisans.data.KeyedDataPoint;
 import com.dataartisans.sinks.InfluxDBSink;
+import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -48,7 +49,13 @@ public class Main {
         );
 
         // Save data to influxdb
-        DataStream<KeyedDataPoint<String>> dataStream = env.addSource(consumer);
+        DataStream<KeyedDataPoint<String>> dataStream = env.addSource(consumer).map(new MapFunction<CAdvisor, KeyedDataPoint<String>>() {
+            @Override
+            public KeyedDataPoint<String> map(CAdvisor cAdvisor) throws Exception {
+                return null;
+            }
+        });
+
         dataStream.addSink(new InfluxDBSink<>("http://10.0.7.11:8086", "root", "root", "cadvisor", "cadvisor"));
 
         env.execute("Replace CAdvisor messages in InfluxDB");
