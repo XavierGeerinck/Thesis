@@ -89,12 +89,15 @@
     <orderEntry type="library" name="Maven: net.jpountz.lz4:lz4:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.yammer.metrics:metrics-core:2.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.101tec:zkclient:0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.influxdb:influxdb-java:2.3" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
-    <orderEntry type="library" name="Maven: com.squareup.retrofit:retrofit:1.9.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.3.1" level="project" />
-    <orderEntry type="library" name="Maven: com.squareup.okhttp:okhttp:2.7.5" level="project" />
-    <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.influxdb:influxdb-java:2.4" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.retrofit2:retrofit:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.retrofit2:converter-moshi:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.moshi:moshi:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.okhttp3:okhttp:3.4.1" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.9.0" level="project" />
+    <orderEntry type="library" name="Maven: com.squareup.okhttp3:logging-interceptor:3.4.1" level="project" />
     <orderEntry type="library" name="Maven: eu.amidst:module-all:0.6.0" level="project" />
     <orderEntry type="library" name="Maven: eu.amidst:core:0.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-math:2.1" level="project" />
@@ -190,8 +193,6 @@
     <orderEntry type="library" name="Maven: dom4j:dom4j:1.1" level="project" />
     <orderEntry type="library" name="Maven: eu.amidst:huginlink:0.6.0" level="project" />
     <orderEntry type="library" name="Maven: eu.amidst:flinklink:0.6.0" level="project" />
-    <orderEntry type="library" name="Maven: junit:junit:4.11" level="project" />
-    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: eu.amidst:lda:0.6.0" level="project" />
     <orderEntry type="library" name="Maven: eu.amidst:tutorials:0.6.0" level="project" />
     <orderEntry type="library" name="Maven: eu.amidst:latent-variable-models:0.6.0" level="project" />
@@ -202,5 +203,7 @@
     <orderEntry type="library" name="Maven: nz.ac.waikato.cms.moa:moa:2013.11" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.sizeofag:sizeofag:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: eu.amidst:wekalink:0.6.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.7" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />
   </component>
 </module>

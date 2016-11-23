@@ -25,7 +25,7 @@ under the License.
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Flink Kafka to InfluxDB</name>
+	<name>Flink CAdvisor Kafka to InfluxDB</name>
 	<url></url>
 
 	<properties>
@@ -74,13 +74,23 @@ under the License.
 		<dependency>
 			<groupId>org.influxdb</groupId>
 			<artifactId>influxdb-java</artifactId>
-			<version>2.3</version>
+			<version>2.4</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.amidst</groupId>
 			<artifactId>module-all</artifactId>
 			<version>0.6.0</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>20.0</version>
 		</dependency>
 	</dependencies>
 
@@ -297,34 +307,4 @@ under the License.
 		-->
 		
 	</build>
-	<profiles>
-		<profile>
-			<!-- A profile that does everyting correctly:
-			We set the Flink dependencies to provided -->
-			<id>build-jar</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>org.apache.flink</groupId>
-					<artifactId>flink-java</artifactId>
-					<version>0.9.0</version>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.apache.flink</groupId>
-					<artifactId>flink-streaming-core</artifactId>
-					<version>0.9.0</version>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.apache.flink</groupId>
-					<artifactId>flink-clients</artifactId>
-					<version>0.9.0</version>
-					<scope>provided</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 </project>
