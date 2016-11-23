@@ -1,4 +1,7 @@
-import com.dataartisans.data.Measurement;
+import cadvisor.CAdvisorDeserializer;
+import cadvisor.CAdvisorTimestampExtractor;
+import cadvisor.pojo.CAdvisor;
+import data.Measurement;
 import com.dataartisans.sinks.InfluxDBSink;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -7,7 +10,6 @@ import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer08;
-import pojo.CAdvisor;
 
 import java.time.Instant;
 import java.util.HashMap;

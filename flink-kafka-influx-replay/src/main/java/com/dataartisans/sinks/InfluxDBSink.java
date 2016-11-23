@@ -1,6 +1,6 @@
 package com.dataartisans.sinks;
 
-import com.dataartisans.data.Measurement;
+import data.Measurement;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.sink.RichSinkFunction;
 import org.influxdb.InfluxDB;
@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class InfluxDBSink extends RichSinkFunction<com.dataartisans.data.Measurement> {
+public class InfluxDBSink extends RichSinkFunction<data.Measurement> {
 
     private transient InfluxDB influxDB = null;
     private final String dataBaseName;

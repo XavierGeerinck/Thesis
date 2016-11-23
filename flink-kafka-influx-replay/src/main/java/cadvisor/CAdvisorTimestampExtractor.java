@@ -1,21 +1,11 @@
-import org.apache.flink.streaming.api.functions.AssignerWithPeriodicWatermarks;
-import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor;
-import org.apache.flink.streaming.api.watermark.Watermark;
-import org.apache.flink.streaming.api.windowing.time.Time;
-import pojo.CAdvisor;
+package cadvisor;
 
-import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import cadvisor.pojo.CAdvisor;
+import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor;
+import org.apache.flink.streaming.api.windowing.time.Time;
+
 import java.time.DateTimeException;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 
 
 public class CAdvisorTimestampExtractor extends BoundedOutOfOrdernessTimestampExtractor<CAdvisor> {

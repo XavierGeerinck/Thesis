@@ -1,11 +1,11 @@
+package cadvisor;
+
+import cadvisor.pojo.CAdvisor;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.typeutils.TypeExtractor;
 import org.apache.flink.streaming.util.serialization.DeserializationSchema;
 import org.apache.flink.streaming.util.serialization.SerializationSchema;
-import pojo.CAdvisor;
 
 import java.io.IOException;
 

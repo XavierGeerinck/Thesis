@@ -1,5 +1,5 @@
 
-package pojo;
+package cadvisor.pojo;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

@@ -1,5 +1,5 @@
 
-package pojo;
+package cadvisor.pojo;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class Stats_ {
+public class Stats {
 
     @SerializedName("Async")
     @Expose
@@ -31,7 +31,7 @@ public class Stats_ {
      * No args constructor for use in serialization
      * 
      */
-    public Stats_() {
+    public Stats() {
     }
 
     /**
@@ -42,7 +42,7 @@ public class Stats_ {
      * @param read
      * @param async
      */
-    public Stats_(long async, long read, long sync, long total, long write) {
+    public Stats(long async, long read, long sync, long total, long write) {
         this.async = async;
         this.read = read;
         this.sync = sync;
@@ -155,10 +155,10 @@ public class Stats_ {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Stats_) == false) {
+        if ((other instanceof Stats) == false) {
             return false;
         }
-        Stats_ rhs = ((Stats_) other);
+        Stats rhs = ((Stats) other);
         return new EqualsBuilder().append(async, rhs.async).append(read, rhs.read).append(sync, rhs.sync).append(total, rhs.total).append(write, rhs.write).isEquals();
     }
 

@@ -1,4 +1,4 @@
-package com.dataartisans.data;
+package data;
 
 import java.util.Date;
 import java.util.HashMap;

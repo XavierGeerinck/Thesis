@@ -1,8 +1,6 @@
 
-package pojo;
+package cadvisor.pojo;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,7 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Generated("org.jsonschema2pojo")
-public class Network {
+public class Interface {
 
     @SerializedName("name")
     @Expose
@@ -40,21 +38,12 @@ public class Network {
     @SerializedName("tx_dropped")
     @Expose
     private long txDropped;
-    @SerializedName("interfaces")
-    @Expose
-    private List<Interface> interfaces = new ArrayList<Interface>();
-    @SerializedName("tcp")
-    @Expose
-    private Tcp tcp;
-    @SerializedName("tcp6")
-    @Expose
-    private Tcp6 tcp6;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public Network() {
+    public Interface() {
     }
 
     /**
@@ -63,16 +52,13 @@ public class Network {
      * @param txDropped
      * @param rxErrors
      * @param name
-     * @param interfaces
      * @param txPackets
-     * @param tcp6
-     * @param tcp
      * @param txBytes
      * @param rxBytes
      * @param txErrors
      * @param rxPackets
      */
-    public Network(String name, long rxBytes, long rxPackets, long rxErrors, long rxDropped, long txBytes, long txPackets, long txErrors, long txDropped, List<Interface> interfaces, Tcp tcp, Tcp6 tcp6) {
+    public Interface(String name, long rxBytes, long rxPackets, long rxErrors, long rxDropped, long txBytes, long txPackets, long txErrors, long txDropped) {
         this.name = name;
         this.rxBytes = rxBytes;
         this.rxPackets = rxPackets;
@@ -82,9 +68,6 @@ public class Network {
         this.txPackets = txPackets;
         this.txErrors = txErrors;
         this.txDropped = txDropped;
-        this.interfaces = interfaces;
-        this.tcp = tcp;
-        this.tcp6 = tcp6;
     }
 
     /**
@@ -249,60 +232,6 @@ public class Network {
         this.txDropped = txDropped;
     }
 
-    /**
-     * 
-     * @return
-     *     The interfaces
-     */
-    public List<Interface> getInterfaces() {
-        return interfaces;
-    }
-
-    /**
-     * 
-     * @param interfaces
-     *     The interfaces
-     */
-    public void setInterfaces(List<Interface> interfaces) {
-        this.interfaces = interfaces;
-    }
-
-    /**
-     * 
-     * @return
-     *     The tcp
-     */
-    public Tcp getTcp() {
-        return tcp;
-    }
-
-    /**
-     * 
-     * @param tcp
-     *     The tcp
-     */
-    public void setTcp(Tcp tcp) {
-        this.tcp = tcp;
-    }
-
-    /**
-     * 
-     * @return
-     *     The tcp6
-     */
-    public Tcp6 getTcp6() {
-        return tcp6;
-    }
-
-    /**
-     * 
-     * @param tcp6
-     *     The tcp6
-     */
-    public void setTcp6(Tcp6 tcp6) {
-        this.tcp6 = tcp6;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -310,7 +239,7 @@ public class Network {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(name).append(rxBytes).append(rxPackets).append(rxErrors).append(rxDropped).append(txBytes).append(txPackets).append(txErrors).append(txDropped).append(interfaces).append(tcp).append(tcp6).toHashCode();
+        return new HashCodeBuilder().append(name).append(rxBytes).append(rxPackets).append(rxErrors).append(rxDropped).append(txBytes).append(txPackets).append(txErrors).append(txDropped).toHashCode();
     }
 
     @Override
@@ -318,11 +247,11 @@ public class Network {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Network) == false) {
+        if ((other instanceof Interface) == false) {
             return false;
         }
-        Network rhs = ((Network) other);
-        return new EqualsBuilder().append(name, rhs.name).append(rxBytes, rhs.rxBytes).append(rxPackets, rhs.rxPackets).append(rxErrors, rhs.rxErrors).append(rxDropped, rhs.rxDropped).append(txBytes, rhs.txBytes).append(txPackets, rhs.txPackets).append(txErrors, rhs.txErrors).append(txDropped, rhs.txDropped).append(interfaces, rhs.interfaces).append(tcp, rhs.tcp).append(tcp6, rhs.tcp6).isEquals();
+        Interface rhs = ((Interface) other);
+        return new EqualsBuilder().append(name, rhs.name).append(rxBytes, rhs.rxBytes).append(rxPackets, rhs.rxPackets).append(rxErrors, rhs.rxErrors).append(rxDropped, rhs.rxDropped).append(txBytes, rhs.txBytes).append(txPackets, rhs.txPackets).append(txErrors, rhs.txErrors).append(txDropped, rhs.txDropped).isEquals();
     }
 
 }
