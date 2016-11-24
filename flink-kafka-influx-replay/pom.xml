@@ -21,7 +21,7 @@ under the License.
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.xaviergeerinck</groupId>
-	<artifactId>flink-kafka-to-influxdb</artifactId>
+	<artifactId>flink-kafka-influx-replay</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 

@@ -16,17 +16,12 @@ import java.util.HashMap;
 import java.util.Properties;
 
 public class Main {
-    private static final String HOST = "10.48.98.232";
+//    private static final String HOST = "10.48.98.232";
+    private static final String HOST = "10.0.7.11";
 
     public static void main(String[] args) throws Exception {
         // parse input arguments
         final ParameterTool parameterTool = ParameterTool.fromArgs(args);
-//
-//        if(parameterTool.getNumberOfParameters() < 4) {
-//            System.out.println("Missing parameters!\nUsage: Kafka --topic <topic> " +
-//                    "--bootstrap.servers <kafka brokers> --zookeeper.connect <zk quorum> --group.id <some id>");
-//            return;
-//        }
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
@@ -38,8 +33,6 @@ public class Main {
 
         // configure Kafka consumer
         Properties props = new Properties();
-//        props.setProperty("zookeeper.connect", "10.0.7.11:2181");     // Zookeeper default host:port
-//        props.setProperty("bootstrap.servers", "10.0.7.11:9092");     // Broker default host:port
         props.setProperty("zookeeper.connect", HOST + ":2181");    // Zookeeper default host:port
         props.setProperty("bootstrap.servers", HOST + ":9092");    // Broker default host:port
         props.setProperty("group.id", "myGroup");                       // Consumer group ID
@@ -48,7 +41,7 @@ public class Main {
         props.setProperty("auto.offset.reset", "largest");           // Always read topic from end
 
         // Open Kafka Stream
-        FlinkKafkaConsumer08<CAdvisor> consumer = new FlinkKafkaConsumer08<CAdvisor>(
+        FlinkKafkaConsumer08<CAdvisor> consumer = new FlinkKafkaConsumer08<>(
                 parameterTool.getRequired("topic"), // Get topic name
                 new CAdvisorDeserializer(),
                 props
