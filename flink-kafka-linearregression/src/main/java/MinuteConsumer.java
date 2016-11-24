@@ -5,6 +5,8 @@ import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.Tuple7;
+import org.apache.flink.api.java.tuple.Tuple8;
+import org.apache.flink.api.java.tuple.Tuple9;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.TimeCharacteristic;
@@ -25,6 +27,8 @@ import java.util.Properties;
 
 public class MinuteConsumer {
     public static void main(String[] args) throws Exception {
+        final Instant now = Instant.now();
+
         // parse input arguments
         final ParameterTool parameterTool = ParameterTool.fromArgs(args);
 
@@ -50,7 +54,7 @@ public class MinuteConsumer {
         props.setProperty("bootstrap.servers", "10.48.98.232:9092");    // Broker default host:port
         props.setProperty("group.id", "myGroup");                       // Consumer group ID
         //props.setProperty("log.retention.hours", "2");                  // How long to retain the logs before deleting them
-//        props.setProperty("auto.offset.reset", "earliest");           // Always read topic from start
+        props.setProperty("auto.offset.reset", "largest");           // Always read topic from end
 
         // Open Kafka Stream
         FlinkKafkaConsumer08<CAdvisor> consumer = new FlinkKafkaConsumer08<>(
@@ -67,20 +71,20 @@ public class MinuteConsumer {
         PredictionModel pm = new PredictionModel();
 
         // Train Model Stream
-        DataStream<Tuple7<String, String, Double, Double, Double, Long, Long>> trainModelStream = dataStream
+        DataStream<Tuple9<String, String, Double, Double, Double, Long, Long, Long, Long>> trainModelStream = dataStream
             .rebalance()
             .assignTimestampsAndWatermarks(new CAdvisorTimestampExtractor())
             .keyBy(CAdvisor.MACHINE_NAME_ID, CAdvisor.CONTAINER_NAME_ID) // Group by machine name and container name
             //.timeWindow(Time.seconds(60))
             .flatMap(new PredictionModel()); // Predict and refine model per machine and container
 
-        DataStream<Tuple7<String, String, Double, Double, Double, Long, Long>> newStream = trainModelStream
+        DataStream<Tuple9<String, String, Double, Double, Double, Long, Long, Long, Long>> newStream = trainModelStream
                 .keyBy(0, 1) // Key on machine name and container name
                 //.timeWindow(Time.seconds(10))
                 .countWindow(10) // Count 10 items and return the result
                 .maxBy(5); // And return the maximum value of our x value (latest training model)
 
-        newStream.addSink(new FlinkKafkaProducer08<>("ram-usage-data", new Tuple7Serialization(), props));
+        newStream.addSink(new FlinkKafkaProducer08<>("models-bundled", new Tuple9Serialization(), props));
 
         // Write the training model result (machineName, containerName, timestamp, ramUsage) to a new kafka stream
         //trainModelStream.addSink(new FlinkKafkaProducer08<>("ram-usage-data", new Tuple7Serialization(), props));
@@ -94,10 +98,10 @@ public class MinuteConsumer {
         env.execute("Read from Kafka example");
     }
 
-    public static class Tuple7Serialization implements SerializationSchema<Tuple7<String, String, Double, Double, Double, Long, Long>> {
+    public static class Tuple9Serialization implements SerializationSchema<Tuple9<String, String, Double, Double, Double, Long, Long, Long, Long>> {
 
         @Override
-        public byte[] serialize(Tuple7<String, String, Double, Double, Double, Long, Long> element) {
+        public byte[] serialize(Tuple9<String, String, Double, Double, Double, Long, Long, Long, Long> element) {
             JSONObject jo = new JSONObject();
 
             try {
@@ -108,6 +112,8 @@ public class MinuteConsumer {
                 jo.put("model_slope_err", element.f4);
                 jo.put("x", element.f5); // timestamp
                 jo.put("y", element.f6); // ram
+                jo.put("script_start_time", element.f7);
+                jo.put("script_current_time", element.f8);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -122,16 +128,17 @@ public class MinuteConsumer {
      *
      * Returns (MachineName, ContainerName, PredictedRAM)
      */
-    public static class PredictionModel extends RichFlatMapFunction<CAdvisor, Tuple7<String, String, Double, Double, Double, Long, Long>> {
+    public static class PredictionModel extends RichFlatMapFunction<CAdvisor, Tuple9<String, String, Double, Double, Double, Long, Long, Long, Long>> {
         // <MachineName <ContainerName <TrainModel>>>
         private transient ValueState<RAMUsagePredictionModel> modelState;
+        private final Instant now = Instant.now();
 
         public ValueState<RAMUsagePredictionModel> getModelState() {
             return modelState;
         }
 
         @Override
-        public void flatMap(CAdvisor cAdvisor, Collector<Tuple7<String, String, Double, Double, Double, Long, Long>> out) throws Exception {
+        public void flatMap(CAdvisor cAdvisor, Collector<Tuple9<String, String, Double, Double, Double, Long, Long, Long, Long>> out) throws Exception {
             // Fetch operator state
             RAMUsagePredictionModel model = modelState.value();
 
@@ -140,29 +147,37 @@ public class MinuteConsumer {
             // https://docs.oracle.com/javase/tutorial/datetime/iso/instant.html
             //TemporalAccessor creationAccessor = DateTimeFormatter.ISO_DATE_TIME.parse( cAdvisor.getTimestamp() );
             try {
-                Instant instant = Instant.parse(cAdvisor.getTimestamp());
-                Long epoch = instant.getEpochSecond();
-
-                // Train the model
-                model.refineModel(cAdvisor.getMachineName(), cAdvisor.getContainerName(), epoch, cAdvisor.getContainerStats().getMemory().getUsage());
-
-                // Update operator state
-                modelState.update(model);
+                // TODO: Currently we get the timestamp as the script processing timestamp
+                // This however is not correct, since we need the cAdvisor.getTimestamp() which is when the metric was measured
+                // But if we use that, we also need the container starttime, which is not provided by cadvisor
+                // So the choice was made to use the script processing time for now
+                // Instant instant = Instant.parse(cAdvisor.getTimestamp());
+                // Long epoch = instant.getEpochSecond();
+                // epoch = epoch - now.getEpochSecond(); // Normalise to the start of the script (else we calculate 40 years in unneeded data)
+                Long epoch = Instant.now().getEpochSecond() - now.getEpochSecond();
 
                 // Emit the used values to train the model
                 //Long y = Double.valueOf(((double)cAdvisor.getContainerStats().getCpu().getUsage().getSystem() / cAdvisor.getContainerStats().getCpu().getUsage().getTotal()) * 100).longValue(); // CPU
                 //Long y = cAdvisor.getContainerStats().getNetwork().getTxBytes();
-                Long y = cAdvisor.getContainerStats().getMemory().getUsage();
+
+                // Train the model (in memory RAM usage, in Mb)
+                Long y = cAdvisor.getContainerStats().getMemory().getUsage() / 1024 / 1024;
+                model.refineModel(cAdvisor.getMachineName(), cAdvisor.getContainerName(), epoch, y);
+
+                // Update operator state
+                modelState.update(model);
 
                 SimpleRegression simpleRegression = model.getModel(cAdvisor.getMachineName(), cAdvisor.getContainerName());
 
-                out.collect(new Tuple7<>(cAdvisor.getMachineName(), // string
+                out.collect(new Tuple9<>(cAdvisor.getMachineName(), // string
                         cAdvisor.getContainerName(),        // string
                         simpleRegression.getIntercept(),    // double
                         simpleRegression.getSlope(),        // double
                         simpleRegression.getSlopeStdErr(),  // double
-                        epoch,                              // long
-                        y));                                // long
+                        epoch,                              // long (difference between end and start)
+                        y,                                  // long
+                        now.getEpochSecond(),               // long
+                        Instant.now().getEpochSecond()));   // long
             } catch (DateTimeParseException ex) {
 
             }

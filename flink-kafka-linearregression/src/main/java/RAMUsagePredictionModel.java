@@ -16,7 +16,7 @@ public class RAMUsagePredictionModel {
 
     public SimpleRegression getModel(String machineName, String containerName) {
         this.models.putIfAbsent(machineName, new HashMap<>());
-        this.models.get(machineName).putIfAbsent(containerName, new SimpleRegression(false));
+        this.models.get(machineName).putIfAbsent(containerName, new SimpleRegression(true));
 
         return this.models.get(machineName).get(containerName);
     }
