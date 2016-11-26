@@ -8,9 +8,6 @@ import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.core.fs.FileSystem;
-import org.apache.flink.ml.common.LabeledVector;
-import org.apache.flink.ml.math.DenseVector;
-import org.apache.flink.ml.regression.MultipleLinearRegression;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Query;
@@ -38,6 +35,7 @@ public class Main {
     private static final String DB_PASS = "root";
     private static final String DB_USER = "root";
     private static final int ITERATIONS = 1000;
+    private static final String MODEL_PATH = "models/"; // Where to save the models
 
     public static void main(String[] args) throws Exception {
         // parse input arguments
@@ -65,8 +63,6 @@ public class Main {
 
         for (QueryResult.Series s : queryResult.getResults().get(0).getSeries()) {
             String containerName = s.getTags().get("container_name");
-            System.out.println(containerName);
-
             runPredictor(env, params, containerName, s);
         }
     }
@@ -85,6 +81,7 @@ public class Main {
         //
         // This algorithm is called "Feature Scaling" https://en.wikipedia.org/wiki/Normalization_(statistics)
         // x' = (x - min(x)) / (max(x) - min(x))
+        // NOTE: Currently this start time is fixed, but it should be taken from a CAdvisor value being returned (PR required for this)
         Instant containerStartTime = Instant.parse("2016-11-26T08:39:47.133954993Z");
 
         // LabeledVector: <predictedValue, [ feature1, feature2, ... ]>
@@ -113,7 +110,7 @@ public class Main {
 
         // Perform Batch Gradient Descent (https://github.com/apache/flink/blob/master/flink-examples/flink-examples-batch/src/main/java/org/apache/flink/examples/java/ml/LinearRegression.java)
         // get the parameters from elements
-        DataSet<Params> parameters = LinearRegressionData.readParamsDataSetFromFile("models/" + containerName + ".txt", env);
+        DataSet<Params> parameters = LinearRegressionData.readParamsDataSetFromFile(MODEL_PATH + containerName + ".txt", env);
 
         IterativeDataSet<Params> loop = parameters.iterate(ITERATIONS);
 
@@ -141,7 +138,7 @@ public class Main {
             result.print();
 
             // Save to its own file (parallelism = 1 writes it to 1 file)
-            result.writeAsText("models/" + containerName + ".txt", FileSystem.WriteMode.OVERWRITE).setParallelism(1);
+            result.writeAsText(MODEL_PATH + containerName + ".txt", FileSystem.WriteMode.OVERWRITE).setParallelism(1);
         }
     }
 
