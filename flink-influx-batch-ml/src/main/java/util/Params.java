@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Params implements Serializable {
 
-    private double theta0,theta1;
+    private double theta0, theta1;
 
     public Params(){};
 
